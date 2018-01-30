@@ -1,0 +1,23 @@
+{
+  "name": "qubiotech/php-abanca-tpv",
+  "type": "library",
+  "description": "PHP Abanca TPV is an abstraction layer to use Abanca Virtual TPV",
+  "keywords": ["library", "abanca", "tpv"],
+  "homepage": "http://qubiotech.com/",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Eduardo Alonso",
+      "email": "eduardo@qubiotech.com",
+      "homepage": "https://github.com/eduardor2k"
+    }
+  ],
+  "require": {
+    "php": ">=5.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "Qubiotech\\TPV\\": "src/"
+    }
+  }
+}
