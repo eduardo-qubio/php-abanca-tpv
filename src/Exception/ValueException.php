@@ -1,5 +1,5 @@
 <?php
 
-namespace Qubiotech\TPV\Esception;
+namespace Qubiotech\TPV\Exception;
 
 class ValueException extends \Exception { }

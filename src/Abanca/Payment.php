@@ -2,7 +2,8 @@
 
 namespace Qubiotech\TPV\Abanca;
 
-use Qubiotech\TPV\Esception\ValueException;
+use phpDocumentor\Reflection\Types\Float_;
+use Qubiotech\TPV\Exception\ValueException;
 
 class Payment {
 
@@ -121,6 +122,58 @@ class Payment {
      * @param integer $value
      * @throws ValueException
      */
+    public function setAcquirerBIN($value) {
+        if(strlen($value) > 10 ){
+            throw new ValueException("Value ".$value." is higher than 10");
+        }
+        $this->AcquirerBIN = $value;
+    }
+
+    /**
+     * Sets the Merchan ID
+     *
+     * @param integer $value
+     * @throws ValueException
+     */
+    public function setTerminalId($value) {
+        if(strlen($value) > 8 ){
+            throw new ValueException("Value ".$value." is higher than 8");
+        }
+        $this->TerminalID = $value;
+    }
+
+    /**
+     * Sets the Merchan ID
+     *
+     * @param integer $value
+     * @throws ValueException
+     */
+    public function setAmount($value) {
+        if(strlen($value) > 8 ){
+            throw new ValueException("Value ".$value." is higher than 8");
+        }
+        $this->Importe = number_format($value,$this->Exponente,'','');
+    }
+
+    /**
+     * Sets the Merchan ID
+     *
+     * @param integer $value
+     * @throws ValueException
+     */
+    public function setOperationNumber($value) {
+        if(strlen($value) > 8 ){
+            throw new ValueException("Value ".$value." is higher than 8");
+        }
+        $this->Num_operacion = $value;
+    }
+
+    /**
+     * Sets the Merchan ID
+     *
+     * @param integer $value
+     * @throws ValueException
+     */
     public function setImporte($value) {
         if(strlen($value) > 12 ){
             throw new ValueException("Value ".$value." is higher than 12");
@@ -179,15 +232,51 @@ class Payment {
         if($key === null) {
             throw new ValueException("Key value ".$key." is incorrect");
         }
-        return sha1($key.$this->MerchantID.
+        return SHA1($key.$this->MerchantID.
             $this->AcquirerBIN.
             $this->TerminalID.
             $this->Num_operacion.
             $this->Importe.
             $this->TipoMoneda.
+            $this->Exponente.
             "SHA1".
             $this->URL_OK.
             $this->URL_NOK
         );
+    }
+
+    /**
+     * Sets the OK url
+     *
+     * @param string $url
+     * @throws ValueException
+     */
+    public function setUrlOK($url) {
+        if(!filter_var($url, FILTER_VALIDATE_URL)) {
+            throw new ValueException("Key value ".$url." is incorrect");
+        }
+        $this->URL_OK = $url;
+    }
+
+    /**
+     * Sets the OK url
+     *
+     * @param string $url
+     * @throws ValueException
+     */
+    public function setUrlNOK($url) {
+        if(!filter_var($url, FILTER_VALIDATE_URL)) {
+            throw new ValueException("Key value ".$url." is incorrect");
+        }
+        $this->URL_NOK = $url;
+    }
+
+    /**
+     * Returns the parameters
+     *
+     * @return array
+     */
+    public function toArray() {
+        return get_object_vars ( $this );
     }
 }

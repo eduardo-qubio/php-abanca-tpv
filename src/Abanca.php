@@ -25,7 +25,7 @@ class Abanca {
      *
      * @param string $key encryption key
      */
-    public function __constructor($key) {
+    public function __construct($key) {
         $this->key = $key;
     }
 
@@ -44,7 +44,10 @@ class Abanca {
      * @param Payment $payment
      * @return string
      */
-    public function getSignature(Payment $payment) {
-        return $payment->getSignature($this->key);
+    public function toArray(Payment $payment) {
+        return array_merge(
+            $payment->toArray(),
+            ['Cadena_sha1' => $payment->getSignature($this->key)]
+        );
     }
 }
