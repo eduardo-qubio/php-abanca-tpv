@@ -2,7 +2,6 @@
 
 namespace Qubiotech\TPV\Abanca;
 
-use phpDocumentor\Reflection\Types\Float_;
 use Qubiotech\TPV\Exception\ValueException;
 
 class Payment {
@@ -162,7 +161,7 @@ class Payment {
      * @throws ValueException
      */
     public function setOperationNumber($value) {
-        if(strlen($value) > 8 ){
+        if(strlen($value) > 50 ){
             throw new ValueException("Value ".$value." is higher than 8");
         }
         $this->Num_operacion = $value;
@@ -221,6 +220,23 @@ class Payment {
         }
     }
 
+    public function getSignatureString($key = null) {
+        if($key === null) {
+            throw new ValueException("Key value ".$key." is incorrect");
+        }
+        return $key.
+        $this->MerchantID.
+        $this->AcquirerBIN.
+        $this->TerminalID.
+        $this->Num_operacion.
+        $this->Importe.
+        $this->TipoMoneda.
+        $this->Exponente.
+        "SHA1".
+        $this->URL_OK.
+        $this->URL_NOK;
+    }
+
     /**
      * Returns the signature for a given key
      *
@@ -229,20 +245,7 @@ class Payment {
      * @throws ValueException
      */
     public function getSignature($key = null) {
-        if($key === null) {
-            throw new ValueException("Key value ".$key." is incorrect");
-        }
-        return SHA1($key.$this->MerchantID.
-            $this->AcquirerBIN.
-            $this->TerminalID.
-            $this->Num_operacion.
-            $this->Importe.
-            $this->TipoMoneda.
-            $this->Exponente.
-            "SHA1".
-            $this->URL_OK.
-            $this->URL_NOK
-        );
+        return SHA1($this->getSignatureString($key));
     }
 
     /**

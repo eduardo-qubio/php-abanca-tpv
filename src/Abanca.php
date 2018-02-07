@@ -11,7 +11,21 @@ class Abanca {
      *
      * @var string
      */
-    protected $endpoint = 'http://tpv.ceca.es:8000/cgi-bin/tpv';
+    protected $endpoint_dev = 'http://tpv.ceca.es:8000/cgi-bin/tpv';
+
+    /**
+     * Service endpoint
+     *
+     * @var string
+     */
+    protected $endpoint_prod = 'https://pgw.ceca.es/cgi-bin/tpv';
+
+    /**
+     * encryption key
+     *
+     * @var string
+     */
+    protected $environement = '';
 
     /**
      * encryption key
@@ -23,10 +37,12 @@ class Abanca {
     /**
      * Main constructor
      *
+     * @param string $environement
      * @param string $key encryption key
      */
-    public function __construct($key) {
+    public function __construct($key, $environement = 'dev') {
         $this->key = $key;
+        $this->environement = $environement;
     }
 
     /**
@@ -35,7 +51,10 @@ class Abanca {
      * @return string
      */
     public function getEndpoint() {
-        return $this->endpoint;
+        if($this->environement == 'prod') {
+            return $this->endpoint_prod;
+        }
+        return $this->endpoint_dev;
     }
 
     /**
@@ -47,7 +66,7 @@ class Abanca {
     public function toArray(Payment $payment) {
         return array_merge(
             $payment->toArray(),
-            ['Cadena_sha1' => $payment->getSignature($this->key)]
+            ['Firma' => $payment->getSignature($this->key)]
         );
     }
 }
