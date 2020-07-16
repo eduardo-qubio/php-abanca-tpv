@@ -16,7 +16,7 @@ class Payment {
     protected $URL_OK = null;
     protected $URL_NOK = null;
     protected $Firma = null;
-    protected $Cifrado = 'SHA1';
+    protected $Cifrado = 'SHA2';
     protected $Pago_soportado = 'SSL';
 
     // Optional values
@@ -232,7 +232,7 @@ class Payment {
         $this->Importe.
         $this->TipoMoneda.
         $this->Exponente.
-        "SHA1".
+        "SHA2".
         $this->URL_OK.
         $this->URL_NOK;
     }
@@ -245,7 +245,7 @@ class Payment {
      * @throws ValueException
      */
     public function getSignature($key = null) {
-        return SHA1($this->getSignatureString($key));
+        return SHA2($this->getSignatureString($key));
     }
 
     /**
