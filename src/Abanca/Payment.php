@@ -245,7 +245,7 @@ class Payment {
      * @throws ValueException
      */
     public function getSignature($key = null) {
-        return SHA2($this->getSignatureString($key));
+        return hash('sha256', $this->getSignatureString($key));            
     }
 
     /**
