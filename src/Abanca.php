@@ -11,14 +11,14 @@ class Abanca {
      *
      * @var string
      */
-    protected $endpoint_dev = 'http://tpv.ceca.es:8000/cgi-bin/tpv';
+    protected $endpoint_dev = 'https://tpv.ceca.es/tpvweb/tpv/compra.action';
 
     /**
      * Service endpoint
      *
      * @var string
      */
-    protected $endpoint_prod = 'https://pgw.ceca.es/cgi-bin/tpv';
+    protected $endpoint_prod = 'https://pgw.ceca.es/tpvweb/tpv/compra.action';
 
     /**
      * encryption key
